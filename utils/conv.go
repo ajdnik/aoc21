@@ -24,3 +24,16 @@ func BinaryToInt(data string) (int64, error) {
 	}
 	return i, nil
 }
+
+func ToIntList(data, delim string) ([]int64, error) {
+	parts := strings.Split(data, delim)
+	nums := []int64{}
+	for _, part := range parts {
+		num, err := ToInt(part)
+		if err != nil {
+			return nil, err
+		}
+		nums = append(nums, num)
+	}
+	return nums, nil
+}

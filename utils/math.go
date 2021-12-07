@@ -7,3 +7,11 @@ func Sum(data []int64) int64 {
 	}
 	return sum
 }
+
+func SumUpTo(n int64) int64 {
+	var sum int64
+	for i := int64(1); i <= n; i++ {
+		sum += i
+	}
+	return sum
+}
