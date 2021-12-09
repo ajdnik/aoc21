@@ -15,3 +15,11 @@ func SumUpTo(n int64) int64 {
 	}
 	return sum
 }
+
+func Mul(data []int64) int64 {
+	mul := int64(1)
+	for _, num := range data {
+		mul *= num
+	}
+	return mul
+}

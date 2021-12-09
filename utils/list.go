@@ -24,3 +24,15 @@ func MinMax(data []int64) (int64, int64) {
 	}
 	return min, max
 }
+
+func Unique(data []int) []int {
+	keys := map[int]bool{}
+	uniq := []int{}
+	for _, itm := range data {
+		if _, ok := keys[itm]; !ok {
+			keys[itm] = true
+			uniq = append(uniq, itm)
+		}
+	}
+	return uniq
+}
