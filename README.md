@@ -10,7 +10,7 @@ In order to execute a specific solution you need to have [Golang](https://go.dev
 $ go mod tidy
 ```
 
-After all fo the dependencies have been installed you can proceed by executing any of the solutions like so:
+After all of the dependencies have been installed you can proceed by executing any of the solutions like so:
 
 ```bash
 $ go run day1/part1/task.go day1/input.txt
