@@ -9,23 +9,13 @@ import (
 
 func FindLowPoints(heights [][]int64) []int64 {
 	lowPoints := []int64{}
-	for rowIdx, row := range heights {
-		for colIdx, curHeight := range row {
-			isLow := true
-			if colIdx-1 >= 0 && row[colIdx-1] <= curHeight {
-				isLow = false
-			}
-			if colIdx+1 < len(row) && row[colIdx+1] <= curHeight {
-				isLow = false
-			}
-			if rowIdx-1 >= 0 && heights[rowIdx-1][colIdx] <= curHeight {
-				isLow = false
-			}
-			if rowIdx+1 < len(heights) && heights[rowIdx+1][colIdx] <= curHeight {
-				isLow = false
-			}
-			if isLow {
-				lowPoints = append(lowPoints, curHeight)
+	for row := 0; row < len(heights); row++ {
+		for col := 0; col < len(heights[row]); col++ {
+			res := day9.FindNeighbors(heights, row, col, func(itm int64) bool {
+				return itm <= heights[row][col]
+			})
+			if len(res) == 0 {
+				lowPoints = append(lowPoints, heights[row][col])
 			}
 		}
 	}
@@ -39,21 +29,18 @@ func main() {
 	}
 	defer closer()
 
-	heightMap := [][]int64{}
+	heights := [][]int64{}
 	for scanner.Scan() {
 		data := scanner.Text()
-		heights, err := day9.ToHeights(data)
+		res, err := day9.ToHeights(data)
 		if err != nil {
 			log.Fatal(err)
 		}
-		heightMap = append(heightMap, heights)
+		heights = append(heights, res)
 	}
 
-	lowPoints := FindLowPoints(heightMap)
-	risks := []int64{}
-	for _, height := range lowPoints {
-		risks = append(risks, height+1)
-	}
+	lowPoints := FindLowPoints(heights)
+	risks := utils.Add(lowPoints, 1)
 	sum := utils.Sum(risks)
 	log.Printf("riskSum=%d\n", sum)
 }

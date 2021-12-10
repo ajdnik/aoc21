@@ -10,30 +10,13 @@ import (
 
 const NoBasin = -1
 
-func GetNeighbourBasins(basins [][]int, row, col int) []int {
-	neighbours := []int{}
-	if row+1 < len(basins) && basins[row+1][col] != NoBasin {
-		neighbours = append(neighbours, basins[row+1][col])
-	}
-	if row-1 >= 0 && basins[row-1][col] != NoBasin {
-		neighbours = append(neighbours, basins[row-1][col])
-	}
-	if col+1 < len(basins[row]) && basins[row][col+1] != NoBasin {
-		neighbours = append(neighbours, basins[row][col+1])
-	}
-	if col-1 >= 0 && basins[row][col-1] != NoBasin {
-		neighbours = append(neighbours, basins[row][col-1])
-	}
-	return utils.Unique(neighbours)
-}
-
-func MergeBasins(basins [][]int, indexes []int) ([][]int, int) {
+func MergeBasins(basins [][]int64, indexes []int64) ([][]int64, int64) {
 	primary := indexes[0]
 	remain := indexes[1:]
-	for i := 0; i < len(basins); i++ {
-		for j := 0; j < len(basins[i]); j++ {
-			if utils.IsIncluded(remain, basins[i][j]) {
-				basins[i][j] = primary
+	for row := 0; row < len(basins); row++ {
+		for col := 0; col < len(basins[row]); col++ {
+			if utils.IsIncluded64(remain, basins[row][col]) {
+				basins[row][col] = primary
 			}
 		}
 	}
@@ -41,45 +24,47 @@ func MergeBasins(basins [][]int, indexes []int) ([][]int, int) {
 }
 
 func FindBasinSizes(heights [][]int64) []int64 {
-	basinMap := make([][]int, len(heights))
-	for i := 0; i < len(heights); i++ {
-		basinMap[i] = make([]int, len(heights[i]))
-		for j := 0; j < len(heights[i]); j++ {
-			basinMap[i][j] = NoBasin
+	basins := make([][]int64, len(heights))
+	for row := 0; row < len(heights); row++ {
+		basins[row] = make([]int64, len(heights[row]))
+		for col := 0; col < len(heights[row]); col++ {
+			basins[row][col] = NoBasin
 		}
 	}
-	var basinsCount int
+	var count int64
 	for row := 0; row < len(heights); row++ {
 		for col := 0; col < len(heights[row]); col++ {
 			if heights[row][col] == 9 {
 				continue
 			}
-			neighbours := GetNeighbourBasins(basinMap, row, col)
+			neighbours := day9.FindNeighbors(basins, row, col, func(itm int64) bool {
+				return itm != NoBasin
+			})
 			if len(neighbours) == 0 {
-				basinMap[row][col] = basinsCount
-				basinsCount++
+				basins[row][col] = count
+				count++
 			} else if len(neighbours) == 1 {
-				basinMap[row][col] = neighbours[0]
+				basins[row][col] = neighbours[0]
 			} else {
-				basinMap, basinIdx := MergeBasins(basinMap, neighbours)
-				basinMap[row][col] = basinIdx
+				basins, idx := MergeBasins(basins, neighbours)
+				basins[row][col] = idx
 			}
 		}
 	}
-	sizeCount := map[int]int64{}
-	for i := 0; i < len(heights); i++ {
-		for j := 0; j < len(heights[i]); j++ {
-			if basinMap[i][j] == NoBasin {
+	sizes := map[int64]int64{}
+	for row := 0; row < len(heights); row++ {
+		for col := 0; col < len(heights[row]); col++ {
+			if basins[row][col] == NoBasin {
 				continue
 			}
-			if _, ok := sizeCount[basinMap[i][j]]; !ok {
-				sizeCount[basinMap[i][j]] = 0
+			if _, ok := sizes[basins[row][col]]; !ok {
+				sizes[basins[row][col]] = 0
 			}
-			sizeCount[basinMap[i][j]]++
+			sizes[basins[row][col]]++
 		}
 	}
 	basinSizes := []int64{}
-	for _, val := range sizeCount {
+	for _, val := range sizes {
 		basinSizes = append(basinSizes, val)
 	}
 	return basinSizes
@@ -92,17 +77,17 @@ func main() {
 	}
 	defer closer()
 
-	heightMap := [][]int64{}
+	heights := [][]int64{}
 	for scanner.Scan() {
 		data := scanner.Text()
-		heights, err := day9.ToHeights(data)
+		res, err := day9.ToHeights(data)
 		if err != nil {
 			log.Fatal(err)
 		}
-		heightMap = append(heightMap, heights)
+		heights = append(heights, res)
 	}
 
-	basinSizes := FindBasinSizes(heightMap)
+	basinSizes := FindBasinSizes(heights)
 	sort.Slice(basinSizes, func(i, j int) bool { return basinSizes[i] > basinSizes[j] })
 	mul := utils.Mul(basinSizes[0:3])
 	log.Printf("sizeMul=%d\n", mul)

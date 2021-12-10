@@ -11,6 +11,15 @@ func IsIncluded(data []int, itm int) bool {
 	return false
 }
 
+func IsIncluded64(data []int64, itm int64) bool {
+	for _, i := range data {
+		if i == itm {
+			return true
+		}
+	}
+	return false
+}
+
 func MinMax(data []int64) (int64, int64) {
 	min := int64(math.MaxInt64)
 	max := int64(math.MinInt64)

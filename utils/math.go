@@ -23,3 +23,11 @@ func Mul(data []int64) int64 {
 	}
 	return mul
 }
+
+func Add(data []int64, num int64) []int64 {
+	res := []int64{}
+	for _, n := range data {
+		res = append(res, n+num)
+	}
+	return res
+}

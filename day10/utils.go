@@ -38,5 +38,4 @@ func ParseLine(line string) ([]rune, rune) {
 		}
 	}
 	return stack, EmptyRune
-
 }

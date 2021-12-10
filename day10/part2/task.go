@@ -33,7 +33,6 @@ func GetLineScore(line string) int64 {
 		score += Lut[char]
 	}
 	return score
-
 }
 
 func main() {
