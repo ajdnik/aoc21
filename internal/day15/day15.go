@@ -2,6 +2,8 @@ package day15
 
 import (
 	"container/heap"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
 type point struct {
@@ -66,14 +68,7 @@ func dijkstra(grid [][]int) int {
 }
 
 func parseGrid(lines []string) [][]int {
-	grid := make([][]int, len(lines))
-	for i, line := range lines {
-		grid[i] = make([]int, len(line))
-		for j, ch := range line {
-			grid[i][j] = int(ch - '0')
-		}
-	}
-	return grid
+	return utils.ParseDigitGrid(lines)
 }
 
 func tileGrid(grid [][]int, factor int) [][]int {

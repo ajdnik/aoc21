@@ -3,6 +3,8 @@ package day19
 import (
 	"fmt"
 	"strings"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
 type vec3 struct {
@@ -12,15 +14,8 @@ type vec3 struct {
 func (a vec3) sub(b vec3) vec3 { return vec3{a.x - b.x, a.y - b.y, a.z - b.z} }
 func (a vec3) add(b vec3) vec3 { return vec3{a.x + b.x, a.y + b.y, a.z + b.z} }
 
-func abs(n int) int {
-	if n < 0 {
-		return -n
-	}
-	return n
-}
-
 func manhattan(a, b vec3) int {
-	return abs(a.x-b.x) + abs(a.y-b.y) + abs(a.z-b.z)
+	return utils.Abs(a.x-b.x) + utils.Abs(a.y-b.y) + utils.Abs(a.z-b.z)
 }
 
 // All 24 rotation functions

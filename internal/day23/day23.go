@@ -2,6 +2,8 @@ package day23
 
 import (
 	"container/heap"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
 // Amphipod types: 0=A, 1=B, 2=C, 3=D, -1=empty
@@ -120,13 +122,6 @@ func (q *pq) Pop() interface{} {
 	return v
 }
 
-func abs(n int) int {
-	if n < 0 {
-		return -n
-	}
-	return n
-}
-
 func solve(initial state) int {
 	dist := map[string]int{}
 	q := &pq{{s: initial, cost: 0}}
@@ -167,7 +162,7 @@ func solve(initial state) int {
 				if !cur.s.hallwayClear(col, h) {
 					continue
 				}
-				steps := ti + 1 + abs(col-h) // steps out of room + hallway distance
+				steps := ti + 1 + utils.Abs(col-h) // steps out of room + hallway distance
 				cost := cur.cost + steps*costs[amp]
 				ns := cur.s.clone()
 				ns.rooms[r][ti] = empty
@@ -197,7 +192,7 @@ func solve(initial state) int {
 			if di < 0 {
 				continue
 			}
-			steps := abs(h-col) + di + 1
+			steps := utils.Abs(h-col) + di + 1
 			cost := cur.cost + steps*costs[amp]
 			ns := cur.s.clone()
 			ns.hallway[h] = empty

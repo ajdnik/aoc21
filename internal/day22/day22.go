@@ -47,20 +47,6 @@ func volume(c cuboid) int {
 	return (c.x2 - c.x1 + 1) * (c.y2 - c.y1 + 1) * (c.z2 - c.z1 + 1)
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 // Inclusion-exclusion approach: maintain list of signed cuboids
 type signedCuboid struct {
 	cuboid

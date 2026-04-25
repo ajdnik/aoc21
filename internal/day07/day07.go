@@ -7,13 +7,6 @@ import (
 	"github.com/ajdnik/aoc21/utils"
 )
 
-func abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
-
 func sumUpTo(n int) int {
 	return n * (n + 1) / 2
 }
@@ -41,7 +34,7 @@ func Part1(lines []string) int {
 		panic(err)
 	}
 	return findMinFuel(positions, func(cur, goal int) int {
-		return abs(cur - goal)
+		return utils.Abs(cur - goal)
 	})
 }
 
@@ -51,6 +44,6 @@ func Part2(lines []string) int {
 		panic(err)
 	}
 	return findMinFuel(positions, func(cur, goal int) int {
-		return sumUpTo(abs(cur - goal))
+		return sumUpTo(utils.Abs(cur - goal))
 	})
 }

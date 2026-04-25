@@ -5,15 +5,7 @@ import (
 )
 
 func parseEnergies(lines []string) [][]int {
-	energies := make([][]int, len(lines))
-	for i, line := range lines {
-		levels, err := utils.ToIntList(line, "")
-		if err != nil {
-			panic(err)
-		}
-		energies[i] = levels
-	}
-	return energies
+	return utils.ParseDigitGrid(lines)
 }
 
 func checkFlash(energies [][]int, flashes [][]bool, row, col int, inc int) {

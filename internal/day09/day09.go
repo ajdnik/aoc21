@@ -2,30 +2,9 @@ package day09
 
 import (
 	"slices"
-	"strconv"
-	"strings"
+
+	"github.com/ajdnik/aoc21/utils"
 )
-
-func toHeights(data string) []int {
-	parts := strings.Split(data, "")
-	heights := make([]int, len(parts))
-	for i, part := range parts {
-		height, err := strconv.Atoi(part)
-		if err != nil {
-			panic(err)
-		}
-		heights[i] = height
-	}
-	return heights
-}
-
-func parseHeights(lines []string) [][]int {
-	heights := make([][]int, len(lines))
-	for i, line := range lines {
-		heights[i] = toHeights(line)
-	}
-	return heights
-}
 
 func findNeighbors(data [][]int, row, col int, predicate func(itm int) bool) []int {
 	var result []int
@@ -45,7 +24,7 @@ func findNeighbors(data [][]int, row, col int, predicate func(itm int) bool) []i
 }
 
 func Part1(lines []string) int {
-	heights := parseHeights(lines)
+	heights := utils.ParseDigitGrid(lines)
 	var sum int
 	for row := 0; row < len(heights); row++ {
 		for col := 0; col < len(heights[row]); col++ {
@@ -76,7 +55,7 @@ func mergeBasins(basins [][]int, indexes []int) ([][]int, int) {
 }
 
 func Part2(lines []string) int {
-	heights := parseHeights(lines)
+	heights := utils.ParseDigitGrid(lines)
 
 	basins := make([][]int, len(heights))
 	for row := 0; row < len(heights); row++ {
