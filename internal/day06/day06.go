@@ -4,23 +4,25 @@ import (
 	"github.com/ajdnik/aoc21/utils"
 )
 
-func simulateDay(timers []int) []int {
-	for idx, timer := range timers {
-		if timer == 0 {
-			timers = append(timers, 8)
-			timers[idx] = 6
-		} else {
-			timers[idx]--
-		}
+func simulate(timers []int, days int) int {
+	var buckets [9]int
+	for _, t := range timers {
+		buckets[t]++
 	}
-	return timers
-}
-
-func simulateDays(timers []int, days int) []int {
 	for day := 0; day < days; day++ {
-		timers = simulateDay(timers)
+		var next [9]int
+		next[6] = buckets[0]
+		next[8] = buckets[0]
+		for i := 1; i <= 8; i++ {
+			next[i-1] += buckets[i]
+		}
+		buckets = next
 	}
-	return timers
+	total := 0
+	for _, count := range buckets {
+		total += count
+	}
+	return total
 }
 
 func Part1(lines []string) int {
@@ -28,27 +30,13 @@ func Part1(lines []string) int {
 	if err != nil {
 		panic(err)
 	}
-	timers = simulateDays(timers, 80)
-	return len(timers)
+	return simulate(timers, 80)
 }
 
 func Part2(lines []string) int {
-	initialTimers, err := utils.ToIntList(lines[0], ",")
+	timers, err := utils.ToIntList(lines[0], ",")
 	if err != nil {
 		panic(err)
 	}
-
-	cache := map[int]int{}
-	var totalFishes int
-	for _, initialTimer := range initialTimers {
-		if val, ok := cache[initialTimer]; ok {
-			totalFishes += val
-			continue
-		}
-		timers := []int{initialTimer}
-		timers = simulateDays(timers, 256)
-		cache[initialTimer] = len(timers)
-		totalFishes += len(timers)
-	}
-	return totalFishes
+	return simulate(timers, 256)
 }

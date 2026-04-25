@@ -18,10 +18,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping slow brute-force simulation in short mode")
-	}
-	got := Part2(testInput)
+got := Part2(testInput)
 	want := 26984457539
 	if got != want {
 		t.Errorf("Part2() = %d, want %d", got, want)
