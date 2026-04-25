@@ -21,5 +21,5 @@ func main() {
 
 	lines := utils.ReadLines(f)
 	fmt.Println("Part 1:", day13.Part1(lines))
-	fmt.Println("Part 2:", day13.Part2(lines))
+	fmt.Printf("Part 2:\n%s\n", day13.Part2(lines))
 }

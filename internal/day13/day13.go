@@ -68,17 +68,25 @@ func foldPaper(paper [][]bool, f *fold) [][]bool {
 		folded := make([][]bool, len(paper))
 		for row := 0; row < len(folded); row++ {
 			folded[row] = make([]bool, f.dimension)
-			for col := 0; col < len(folded[row]); col++ {
-				folded[row][col] = paper[row][col] || paper[row][len(paper[row])-1-col]
+			for col := 0; col < f.dimension; col++ {
+				mirror := 2*f.dimension - col
+				folded[row][col] = paper[row][col]
+				if mirror < len(paper[row]) {
+					folded[row][col] = folded[row][col] || paper[row][mirror]
+				}
 			}
 		}
 		return folded
 	}
 	folded := make([][]bool, f.dimension)
-	for row := 0; row < len(folded); row++ {
+	for row := 0; row < f.dimension; row++ {
 		folded[row] = make([]bool, len(paper[row]))
+		mirror := 2*f.dimension - row
 		for col := 0; col < len(folded[row]); col++ {
-			folded[row][col] = paper[row][col] || paper[len(paper)-1-row][col]
+			folded[row][col] = paper[row][col]
+			if mirror < len(paper) {
+				folded[row][col] = folded[row][col] || paper[mirror][col]
+			}
 		}
 	}
 	return folded
