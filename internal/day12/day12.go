@@ -53,18 +53,18 @@ func hasLowerDuplicate(path []string) bool {
 	return false
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	graph := toGraph(lines)
 	paths := traverseGraph(graph, []string{"start"}, func(path []string, node string) bool {
 		return slices.Contains(path, node) && !isUpper(node)
 	})
-	return int64(len(paths))
+	return len(paths)
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	graph := toGraph(lines)
 	paths := traverseGraph(graph, []string{"start"}, func(path []string, node string) bool {
 		return slices.Contains(path, node) && !isUpper(node) && hasLowerDuplicate(path)
 	})
-	return int64(len(paths))
+	return len(paths)
 }

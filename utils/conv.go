@@ -5,35 +5,23 @@ import (
 	"strings"
 )
 
-func ToInt(data string) (int64, error) {
-	i, err := strconv.ParseInt(data, 10, 64)
-	if err != nil {
-		return i, err
-	}
-	return i, nil
+func ToInt(data string) (int, error) {
+	return strconv.Atoi(data)
 }
 
 func NormalizeSpaces(data string) string {
 	return strings.Join(strings.Fields(data), " ")
 }
 
-func BinaryToInt(data string) (int64, error) {
-	i, err := strconv.ParseInt(data, 2, 64)
-	if err != nil {
-		return i, err
-	}
-	return i, nil
-}
-
-func ToIntList(data, delim string) ([]int64, error) {
+func ToIntList(data, delim string) ([]int, error) {
 	parts := strings.Split(data, delim)
-	nums := []int64{}
-	for _, part := range parts {
-		num, err := ToInt(part)
+	nums := make([]int, len(parts))
+	for i, part := range parts {
+		num, err := strconv.Atoi(part)
 		if err != nil {
 			return nil, err
 		}
-		nums = append(nums, num)
+		nums[i] = num
 	}
 	return nums, nil
 }

@@ -8,11 +8,11 @@ import (
 )
 
 type bingoBoard struct {
-	Numbers  [5][5]int64
+	Numbers  [5][5]int
 	Selected [5][5]bool
 }
 
-func (bb *bingoBoard) markNumber(num int64) bool {
+func (bb *bingoBoard) markNumber(num int) bool {
 	for row := 0; row < 5; row++ {
 		for col := 0; col < 5; col++ {
 			if bb.Numbers[row][col] == num && !bb.Selected[row][col] {
@@ -24,8 +24,8 @@ func (bb *bingoBoard) markNumber(num int64) bool {
 	return false
 }
 
-func (bb *bingoBoard) sumUnselected() int64 {
-	var sum int64
+func (bb *bingoBoard) sumUnselected() int {
+	var sum int
 	for row := 0; row < 5; row++ {
 		for col := 0; col < 5; col++ {
 			if !bb.Selected[row][col] {
@@ -50,9 +50,9 @@ func (bb *bingoBoard) hasBingo() bool {
 	return false
 }
 
-func parseInput(lines []string) ([]int64, []*bingoBoard) {
+func parseInput(lines []string) ([]int, []*bingoBoard) {
 	sNums := strings.Split(lines[0], ",")
-	drawNumbers := make([]int64, len(sNums))
+	drawNumbers := make([]int, len(sNums))
 	for i, s := range sNums {
 		num, err := utils.ToInt(s)
 		if err != nil {
@@ -90,7 +90,7 @@ func parseInput(lines []string) ([]int64, []*bingoBoard) {
 	return drawNumbers, boards
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	drawNumbers, boards := parseInput(lines)
 
 	for _, draw := range drawNumbers {
@@ -104,11 +104,11 @@ func Part1(lines []string) int64 {
 	return -1
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	drawNumbers, boards := parseInput(lines)
 
 	var won []int
-	var wonDraw []int64
+	var wonDraw []int
 	for _, draw := range drawNumbers {
 		for idx, board := range boards {
 			if slices.Contains(won, idx) {

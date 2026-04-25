@@ -31,9 +31,9 @@ func parseObservations(lines []string) []*observation {
 	return obs
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	observations := parseObservations(lines)
-	var sum int64
+	var sum int
 	for _, observ := range observations {
 		for _, out := range observ.Output {
 			switch len(out) {
@@ -146,13 +146,13 @@ func toNumbers(output []string, mapping map[string]string) []int {
 	return numbers
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	observations := parseObservations(lines)
-	var sum int64
+	var sum int
 	for _, observ := range observations {
 		mapping := solveWires(observ.Patterns)
 		numbers := toNumbers(observ.Output, mapping)
-		sum += int64(numbers[0]*1000 + numbers[1]*100 + numbers[2]*10 + numbers[3])
+		sum += numbers[0]*1000 + numbers[1]*100 + numbers[2]*10 + numbers[3]
 	}
 	return sum
 }

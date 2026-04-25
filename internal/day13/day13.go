@@ -15,12 +15,12 @@ const (
 
 type fold struct {
 	axis      direction
-	dimension int64
+	dimension int
 }
 
 func parsePaperAndFolds(lines []string) ([][]bool, []*fold) {
-	var dots [][]int64
-	var maxY, maxX int64
+	var dots [][2]int
+	var maxY, maxX int
 	var folds []*fold
 
 	for _, line := range lines {
@@ -40,22 +40,22 @@ func parsePaperAndFolds(lines []string) ([][]bool, []*fold) {
 			folds = append(folds, &fold{axis: dir, dimension: dim})
 			continue
 		}
-		dot, err := utils.ToIntList(line, ",")
+		coords, err := utils.ToIntList(line, ",")
 		if err != nil {
 			panic(err)
 		}
-		if dot[0] > maxX {
-			maxX = dot[0]
+		if coords[0] > maxX {
+			maxX = coords[0]
 		}
-		if dot[1] > maxY {
-			maxY = dot[1]
+		if coords[1] > maxY {
+			maxY = coords[1]
 		}
-		dots = append(dots, dot)
+		dots = append(dots, [2]int{coords[0], coords[1]})
 	}
 
-	paper := make([][]bool, int(maxX+1))
+	paper := make([][]bool, maxX+1)
 	for row := 0; row < len(paper); row++ {
-		paper[row] = make([]bool, int(maxY+1))
+		paper[row] = make([]bool, maxY+1)
 	}
 	for _, dot := range dots {
 		paper[dot[0]][dot[1]] = true
@@ -67,14 +67,14 @@ func foldPaper(paper [][]bool, f *fold) [][]bool {
 	if f.axis == yAxis {
 		folded := make([][]bool, len(paper))
 		for row := 0; row < len(folded); row++ {
-			folded[row] = make([]bool, int(f.dimension))
+			folded[row] = make([]bool, f.dimension)
 			for col := 0; col < len(folded[row]); col++ {
 				folded[row][col] = paper[row][col] || paper[row][len(paper[row])-1-col]
 			}
 		}
 		return folded
 	}
-	folded := make([][]bool, int(f.dimension))
+	folded := make([][]bool, f.dimension)
 	for row := 0; row < len(folded); row++ {
 		folded[row] = make([]bool, len(paper[row]))
 		for col := 0; col < len(folded[row]); col++ {
@@ -84,8 +84,8 @@ func foldPaper(paper [][]bool, f *fold) [][]bool {
 	return folded
 }
 
-func countDots(paper [][]bool) int64 {
-	var count int64
+func countDots(paper [][]bool) int {
+	var count int
 	for row := 0; row < len(paper); row++ {
 		for col := 0; col < len(paper[row]); col++ {
 			if paper[row][col] {
@@ -96,7 +96,7 @@ func countDots(paper [][]bool) int64 {
 	return count
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	paper, folds := parsePaperAndFolds(lines)
 	folded := foldPaper(paper, folds[0])
 	return countDots(folded)

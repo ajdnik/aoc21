@@ -1,8 +1,6 @@
 package day03
 
-import (
-	"github.com/ajdnik/aoc21/utils"
-)
+import "strconv"
 
 type searchType int
 
@@ -10,6 +8,14 @@ const (
 	oxygen searchType = iota
 	co2
 )
+
+func binaryToInt(data string) int {
+	i, err := strconv.ParseInt(data, 2, 64)
+	if err != nil {
+		panic(err)
+	}
+	return int(i)
+}
 
 func filterMatches(data []string, match byte, pos int) []string {
 	var filtered []string
@@ -22,7 +28,7 @@ func filterMatches(data []string, match byte, pos int) []string {
 }
 
 func buildValue(data []string, typ searchType, pos int) string {
-	var zeros, ones uint64
+	var zeros, ones int
 	for _, itm := range data {
 		switch itm[pos] {
 		case '1':
@@ -54,12 +60,12 @@ func buildValue(data []string, typ searchType, pos int) string {
 	return buildValue(filtered, typ, pos+1)
 }
 
-func Part1(lines []string) int64 {
-	var ones, zeros []uint64
+func Part1(lines []string) int {
+	var ones, zeros []int
 	for _, data := range lines {
 		if ones == nil {
-			ones = make([]uint64, len(data))
-			zeros = make([]uint64, len(data))
+			ones = make([]int, len(data))
+			zeros = make([]int, len(data))
 		}
 		for idx, char := range data {
 			switch char {
@@ -82,28 +88,11 @@ func Part1(lines []string) int64 {
 		}
 	}
 
-	gammaInt, err := utils.BinaryToInt(gamma)
-	if err != nil {
-		panic(err)
-	}
-	epsilonInt, err := utils.BinaryToInt(epsilon)
-	if err != nil {
-		panic(err)
-	}
-	return gammaInt * epsilonInt
+	return binaryToInt(gamma) * binaryToInt(epsilon)
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	oxygenVal := buildValue(lines, oxygen, 0)
 	co2Val := buildValue(lines, co2, 0)
-
-	oxygenInt, err := utils.BinaryToInt(oxygenVal)
-	if err != nil {
-		panic(err)
-	}
-	co2Int, err := utils.BinaryToInt(co2Val)
-	if err != nil {
-		panic(err)
-	}
-	return oxygenInt * co2Int
+	return binaryToInt(oxygenVal) * binaryToInt(co2Val)
 }

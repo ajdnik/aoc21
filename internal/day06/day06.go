@@ -4,7 +4,7 @@ import (
 	"github.com/ajdnik/aoc21/utils"
 )
 
-func simulateDay(timers []int64) []int64 {
+func simulateDay(timers []int) []int {
 	for idx, timer := range timers {
 		if timer == 0 {
 			timers = append(timers, 8)
@@ -16,40 +16,39 @@ func simulateDay(timers []int64) []int64 {
 	return timers
 }
 
-func simulateDays(timers []int64, days int) []int64 {
+func simulateDays(timers []int, days int) []int {
 	for day := 0; day < days; day++ {
 		timers = simulateDay(timers)
 	}
 	return timers
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	timers, err := utils.ToIntList(lines[0], ",")
 	if err != nil {
 		panic(err)
 	}
 	timers = simulateDays(timers, 80)
-	return int64(len(timers))
+	return len(timers)
 }
 
-func Part2(lines []string) uint64 {
+func Part2(lines []string) int {
 	initialTimers, err := utils.ToIntList(lines[0], ",")
 	if err != nil {
 		panic(err)
 	}
 
-	cache := map[int64]uint64{}
-	var totalFishes uint64
+	cache := map[int]int{}
+	var totalFishes int
 	for _, initialTimer := range initialTimers {
 		if val, ok := cache[initialTimer]; ok {
 			totalFishes += val
 			continue
 		}
-		timers := []int64{initialTimer}
+		timers := []int{initialTimer}
 		timers = simulateDays(timers, 256)
-		popLen := uint64(len(timers))
-		cache[initialTimer] = popLen
-		totalFishes += popLen
+		cache[initialTimer] = len(timers)
+		totalFishes += len(timers)
 	}
 	return totalFishes
 }

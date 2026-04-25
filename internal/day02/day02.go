@@ -17,7 +17,7 @@ const (
 
 type movement struct {
 	dir  direction
-	unit int64
+	unit int
 }
 
 func toMovement(data string) (movement, error) {
@@ -59,9 +59,9 @@ func parseMovements(lines []string) []movement {
 	return movs
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	movs := parseMovements(lines)
-	var horiz, depth int64
+	var horiz, depth int
 	for _, mov := range movs {
 		switch mov.dir {
 		case forward:
@@ -75,9 +75,9 @@ func Part1(lines []string) int64 {
 	return horiz * depth
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	movs := parseMovements(lines)
-	var horiz, depth, aim int64
+	var horiz, depth, aim int
 	for _, mov := range movs {
 		switch mov.dir {
 		case forward:

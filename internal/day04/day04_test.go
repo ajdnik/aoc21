@@ -29,7 +29,7 @@ var testInput = utils.ReadLines(strings.NewReader(`7,4,9,5,11,17,23,2,0,14,21,24
 
 func TestPart1(t *testing.T) {
 	got := Part1(testInput)
-	want := int64(4512)
+	want := 4512
 	if got != want {
 		t.Errorf("Part1() = %d, want %d", got, want)
 	}
@@ -37,7 +37,7 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	got := Part2(testInput)
-	want := int64(1924)
+	want := 1924
 	if got != want {
 		t.Errorf("Part2() = %d, want %d", got, want)
 	}

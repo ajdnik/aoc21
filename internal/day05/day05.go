@@ -1,11 +1,6 @@
 package day05
 
-import (
-	"errors"
-	"strings"
-
-	"github.com/ajdnik/aoc21/utils"
-)
+import "fmt"
 
 type direction int
 
@@ -16,8 +11,8 @@ const (
 )
 
 type point struct {
-	X int64
-	Y int64
+	X int
+	Y int
 }
 
 type line struct {
@@ -25,7 +20,7 @@ type line struct {
 	End   point
 }
 
-func (l line) maxDimension() int64 {
+func (l line) maxDimension() int {
 	m := l.Start.X
 	if l.Start.Y > m {
 		m = l.Start.Y
@@ -89,58 +84,27 @@ func (l line) initializePointGenerator() (point, direction, direction) {
 	return pt, xDir, yDir
 }
 
-func toLine(data string) (line, error) {
+func toLine(data string) line {
 	var l line
-	data = utils.NormalizeSpaces(data)
-	firstSplit := strings.Split(data, ",")
-	if len(firstSplit) != 3 {
-		return l, errors.New("parsing failed: more than 2 commas found")
-	}
-	x1, err := utils.ToInt(firstSplit[0])
-	if err != nil {
-		return l, err
-	}
-	l.Start.X = x1
-	y2, err := utils.ToInt(firstSplit[2])
-	if err != nil {
-		return l, err
-	}
-	l.End.Y = y2
-	secondSplit := strings.Split(firstSplit[1], " ")
-	if len(secondSplit) != 3 {
-		return l, errors.New("parsing failed: more than 2 spaces found")
-	}
-	y1, err := utils.ToInt(secondSplit[0])
-	if err != nil {
-		return l, err
-	}
-	l.Start.Y = y1
-	x2, err := utils.ToInt(secondSplit[2])
-	if err != nil {
-		return l, err
-	}
-	l.End.X = x2
-	return l, nil
+	fmt.Sscanf(data, "%d,%d -> %d,%d", &l.Start.X, &l.Start.Y, &l.End.X, &l.End.Y)
+	return l
 }
 
-func parseLines(data []string) ([]line, int64) {
+func parseLines(data []string) ([]line, int) {
 	var lines []line
-	var max int64
+	var max int
 	for _, d := range data {
-		l, err := toLine(d)
-		if err != nil {
-			panic(err)
-		}
+		l := toLine(d)
 		lines = append(lines, l)
-		if max < l.maxDimension() {
-			max = l.maxDimension()
+		if m := l.maxDimension(); max < m {
+			max = m
 		}
 	}
 	return lines, max
 }
 
-func countOverlapping(field []int64) int64 {
-	var count int64
+func countOverlapping(field []int) int {
+	var count int
 	for _, num := range field {
 		if num >= 2 {
 			count++
@@ -149,10 +113,10 @@ func countOverlapping(field []int64) int64 {
 	return count
 }
 
-func Part1(data []string) int64 {
+func Part1(data []string) int {
 	lines, max := parseLines(data)
 
-	field := make([]int64, (max+1)*(max+1))
+	field := make([]int, (max+1)*(max+1))
 	for _, l := range lines {
 		if !l.isHorizOrVert() {
 			continue
@@ -165,10 +129,10 @@ func Part1(data []string) int64 {
 	return countOverlapping(field)
 }
 
-func Part2(data []string) int64 {
+func Part2(data []string) int {
 	lines, max := parseLines(data)
 
-	field := make([]int64, (max+1)*(max+1))
+	field := make([]int, (max+1)*(max+1))
 	for _, l := range lines {
 		for next, pt, ok := l.pointGenerator(), (point{}), true; ok; {
 			pt, ok = next()

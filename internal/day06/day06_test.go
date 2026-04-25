@@ -11,7 +11,7 @@ var testInput = utils.ReadLines(strings.NewReader(`3,4,3,1,2`))
 
 func TestPart1(t *testing.T) {
 	got := Part1(testInput)
-	want := int64(5934)
+	want := 5934
 	if got != want {
 		t.Errorf("Part1() = %d, want %d", got, want)
 	}
@@ -22,7 +22,7 @@ func TestPart2(t *testing.T) {
 		t.Skip("skipping slow brute-force simulation in short mode")
 	}
 	got := Part2(testInput)
-	want := uint64(26984457539)
+	want := 26984457539
 	if got != want {
 		t.Errorf("Part2() = %d, want %d", got, want)
 	}

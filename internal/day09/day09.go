@@ -2,16 +2,15 @@ package day09
 
 import (
 	"slices"
+	"strconv"
 	"strings"
-
-	"github.com/ajdnik/aoc21/utils"
 )
 
-func toHeights(data string) []int64 {
+func toHeights(data string) []int {
 	parts := strings.Split(data, "")
-	heights := make([]int64, len(parts))
+	heights := make([]int, len(parts))
 	for i, part := range parts {
-		height, err := utils.ToInt(part)
+		height, err := strconv.Atoi(part)
 		if err != nil {
 			panic(err)
 		}
@@ -20,16 +19,16 @@ func toHeights(data string) []int64 {
 	return heights
 }
 
-func parseHeights(lines []string) [][]int64 {
-	heights := make([][]int64, len(lines))
+func parseHeights(lines []string) [][]int {
+	heights := make([][]int, len(lines))
 	for i, line := range lines {
 		heights[i] = toHeights(line)
 	}
 	return heights
 }
 
-func findNeighbors(data [][]int64, row, col int, predicate func(itm int64) bool) []int64 {
-	var result []int64
+func findNeighbors(data [][]int, row, col int, predicate func(itm int) bool) []int {
+	var result []int
 	if row+1 < len(data) && predicate(data[row+1][col]) {
 		result = append(result, data[row+1][col])
 	}
@@ -45,12 +44,12 @@ func findNeighbors(data [][]int64, row, col int, predicate func(itm int64) bool)
 	return result
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	heights := parseHeights(lines)
-	var sum int64
+	var sum int
 	for row := 0; row < len(heights); row++ {
 		for col := 0; col < len(heights[row]); col++ {
-			res := findNeighbors(heights, row, col, func(itm int64) bool {
+			res := findNeighbors(heights, row, col, func(itm int) bool {
 				return itm <= heights[row][col]
 			})
 			if len(res) == 0 {
@@ -63,7 +62,7 @@ func Part1(lines []string) int64 {
 
 const noBasin = -1
 
-func mergeBasins(basins [][]int64, indexes []int64) ([][]int64, int64) {
+func mergeBasins(basins [][]int, indexes []int) ([][]int, int) {
 	primary := indexes[0]
 	remain := indexes[1:]
 	for row := 0; row < len(basins); row++ {
@@ -76,24 +75,24 @@ func mergeBasins(basins [][]int64, indexes []int64) ([][]int64, int64) {
 	return basins, primary
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	heights := parseHeights(lines)
 
-	basins := make([][]int64, len(heights))
+	basins := make([][]int, len(heights))
 	for row := 0; row < len(heights); row++ {
-		basins[row] = make([]int64, len(heights[row]))
+		basins[row] = make([]int, len(heights[row]))
 		for col := 0; col < len(heights[row]); col++ {
 			basins[row][col] = noBasin
 		}
 	}
 
-	var count int64
+	var count int
 	for row := 0; row < len(heights); row++ {
 		for col := 0; col < len(heights[row]); col++ {
 			if heights[row][col] == 9 {
 				continue
 			}
-			neighbours := findNeighbors(basins, row, col, func(itm int64) bool {
+			neighbours := findNeighbors(basins, row, col, func(itm int) bool {
 				return itm != noBasin
 			})
 			if len(neighbours) == 0 {
@@ -108,7 +107,7 @@ func Part2(lines []string) int64 {
 		}
 	}
 
-	sizes := map[int64]int64{}
+	sizes := map[int]int{}
 	for row := 0; row < len(heights); row++ {
 		for col := 0; col < len(heights[row]); col++ {
 			if basins[row][col] == noBasin {
@@ -118,10 +117,10 @@ func Part2(lines []string) int64 {
 		}
 	}
 
-	var basinSizes []int64
+	var basinSizes []int
 	for _, val := range sizes {
 		basinSizes = append(basinSizes, val)
 	}
-	slices.SortFunc(basinSizes, func(a, b int64) int { return int(b - a) })
-	return utils.Mul(basinSizes[0:3])
+	slices.SortFunc(basinSizes, func(a, b int) int { return b - a })
+	return basinSizes[0] * basinSizes[1] * basinSizes[2]
 }

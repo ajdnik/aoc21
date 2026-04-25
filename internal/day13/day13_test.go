@@ -31,7 +31,7 @@ fold along x=5`))
 
 func TestPart1(t *testing.T) {
 	got := Part1(testInput)
-	want := int64(17)
+	want := 17
 	if got != want {
 		t.Errorf("Part1() = %d, want %d", got, want)
 	}

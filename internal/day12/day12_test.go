@@ -51,7 +51,7 @@ func TestPart1(t *testing.T) {
 	tests := []struct {
 		name  string
 		input []string
-		want  int64
+		want  int
 	}{
 		{"small", testInput1, 10},
 		{"medium", testInput2, 19},
@@ -71,7 +71,7 @@ func TestPart2(t *testing.T) {
 	tests := []struct {
 		name  string
 		input []string
-		want  int64
+		want  int
 	}{
 		{"small", testInput1, 36},
 		{"medium", testInput2, 103},

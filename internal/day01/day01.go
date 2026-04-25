@@ -1,13 +1,11 @@
 package day01
 
-import (
-	"github.com/ajdnik/aoc21/utils"
-)
+import "strconv"
 
-func parseNumbers(lines []string) []int64 {
-	nums := make([]int64, len(lines))
+func parseNumbers(lines []string) []int {
+	nums := make([]int, len(lines))
 	for i, line := range lines {
-		num, err := utils.ToInt(line)
+		num, err := strconv.Atoi(line)
 		if err != nil {
 			panic(err)
 		}
@@ -16,9 +14,9 @@ func parseNumbers(lines []string) []int64 {
 	return nums
 }
 
-func Part1(lines []string) int64 {
+func Part1(lines []string) int {
 	nums := parseNumbers(lines)
-	var inc int64
+	var inc int
 	for i := 1; i < len(nums); i++ {
 		if nums[i] > nums[i-1] {
 			inc++
@@ -27,9 +25,9 @@ func Part1(lines []string) int64 {
 	return inc
 }
 
-func Part2(lines []string) int64 {
+func Part2(lines []string) int {
 	nums := parseNumbers(lines)
-	var inc int64
+	var inc int
 	prev := nums[0] + nums[1] + nums[2]
 	for i := 3; i < len(nums); i++ {
 		sum := nums[i] + nums[i-1] + nums[i-2]
