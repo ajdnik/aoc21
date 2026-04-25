@@ -1,18 +1,44 @@
-# aoc21
-Advent of Code 2021 :christmas_tree:
+# Advent of Code 2021
 
-This repository contains [Advent of Code](https://adventofcode.com) task solutions for year 2021. All of the tasks are organized by days in separate folders.
+Solutions for [Advent of Code 2021](https://adventofcode.com/2021) in Go.
 
-### Running
-In order to execute a specific solution you need to have [Golang](https://go.dev) installed. Then you need to install repository dependencies:
+## Project Structure
 
-```bash
-$ go mod tidy
+```
+cmd/dayXX/         - Entry points for each day
+internal/dayXX/    - Solution logic and tests
+input/             - Puzzle input files
+utils/             - Shared utilities (parsing, math helpers)
 ```
 
-After all of the dependencies have been installed you can proceed by executing any of the solutions like so:
+## Prerequisites
+
+- [Go](https://go.dev) 1.22+
+- [golangci-lint](https://golangci-lint.run) (for linting)
+
+## Usage
+
+### Run a solution
 
 ```bash
-$ go run day1/part1/task.go day1/input.txt
-2021/12/01 19:50:47 increased=1681
+make run DAY=01
+```
+
+### Run tests
+
+```bash
+make test
+```
+
+### Format and lint
+
+```bash
+make fmt
+make lint
+```
+
+### Run all checks
+
+```bash
+make all
 ```
