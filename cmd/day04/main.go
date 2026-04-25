@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer f.Close() //nolint:errcheck
 
 	lines := utils.ReadLines(f)
 	fmt.Println("Part 1:", day04.Part1(lines))

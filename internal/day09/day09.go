@@ -95,12 +95,13 @@ func Part2(lines []string) int {
 			neighbours := findNeighbors(basins, row, col, func(itm int) bool {
 				return itm != noBasin
 			})
-			if len(neighbours) == 0 {
+			switch len(neighbours) {
+			case 0:
 				basins[row][col] = count
 				count++
-			} else if len(neighbours) == 1 {
+			case 1:
 				basins[row][col] = neighbours[0]
-			} else {
+			default:
 				basins, idx := mergeBasins(basins, neighbours)
 				basins[row][col] = idx
 			}

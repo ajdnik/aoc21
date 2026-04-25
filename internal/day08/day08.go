@@ -48,7 +48,7 @@ func Part1(lines []string) int {
 func getUnknownChars(input string, known string) string {
 	unknown := input
 	for _, char := range known {
-		unknown = strings.Replace(unknown, string(char), "", -1)
+		unknown = strings.ReplaceAll(unknown, string(char), "")
 	}
 	return unknown
 }

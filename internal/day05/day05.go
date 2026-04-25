@@ -53,7 +53,7 @@ func (l line) pointGenerator() func() (point, bool) {
 		case descending:
 			curPoint.Y--
 		}
-		hasNext := !(curPoint.X == l.End.X && curPoint.Y == l.End.Y)
+		hasNext := curPoint.X != l.End.X || curPoint.Y != l.End.Y
 		return curPoint, hasNext
 	}
 }
@@ -61,23 +61,25 @@ func (l line) pointGenerator() func() (point, bool) {
 func (l line) initializePointGenerator() (point, direction, direction) {
 	pt := point{}
 	var xDir, yDir direction
-	if l.Start.X == l.End.X {
+	switch {
+	case l.Start.X == l.End.X:
 		xDir = static
 		pt.X = l.Start.X
-	} else if l.Start.X < l.End.X {
+	case l.Start.X < l.End.X:
 		xDir = ascending
 		pt.X = l.Start.X - 1
-	} else {
+	default:
 		xDir = descending
 		pt.X = l.Start.X + 1
 	}
-	if l.Start.Y == l.End.Y {
+	switch {
+	case l.Start.Y == l.End.Y:
 		yDir = static
 		pt.Y = l.Start.Y
-	} else if l.Start.Y < l.End.Y {
+	case l.Start.Y < l.End.Y:
 		yDir = ascending
 		pt.Y = l.Start.Y - 1
-	} else {
+	default:
 		yDir = descending
 		pt.Y = l.Start.Y + 1
 	}
@@ -86,21 +88,21 @@ func (l line) initializePointGenerator() (point, direction, direction) {
 
 func toLine(data string) line {
 	var l line
-	fmt.Sscanf(data, "%d,%d -> %d,%d", &l.Start.X, &l.Start.Y, &l.End.X, &l.End.Y)
+	_, _ = fmt.Sscanf(data, "%d,%d -> %d,%d", &l.Start.X, &l.Start.Y, &l.End.X, &l.End.Y)
 	return l
 }
 
 func parseLines(data []string) ([]line, int) {
 	var lines []line
-	var max int
+	var dim int
 	for _, d := range data {
 		l := toLine(d)
 		lines = append(lines, l)
-		if m := l.maxDimension(); max < m {
-			max = m
+		if m := l.maxDimension(); dim < m {
+			dim = m
 		}
 	}
-	return lines, max
+	return lines, dim
 }
 
 func countOverlapping(field []int) int {
@@ -114,29 +116,29 @@ func countOverlapping(field []int) int {
 }
 
 func Part1(data []string) int {
-	lines, max := parseLines(data)
+	lines, dim := parseLines(data)
 
-	field := make([]int, (max+1)*(max+1))
+	field := make([]int, (dim+1)*(dim+1))
 	for _, l := range lines {
 		if !l.isHorizOrVert() {
 			continue
 		}
 		for next, pt, ok := l.pointGenerator(), (point{}), true; ok; {
 			pt, ok = next()
-			field[pt.X*max+pt.Y]++
+			field[pt.X*dim+pt.Y]++
 		}
 	}
 	return countOverlapping(field)
 }
 
 func Part2(data []string) int {
-	lines, max := parseLines(data)
+	lines, dim := parseLines(data)
 
-	field := make([]int, (max+1)*(max+1))
+	field := make([]int, (dim+1)*(dim+1))
 	for _, l := range lines {
 		for next, pt, ok := l.pointGenerator(), (point{}), true; ok; {
 			pt, ok = next()
-			field[pt.X*max+pt.Y]++
+			field[pt.X*dim+pt.Y]++
 		}
 	}
 	return countOverlapping(field)
