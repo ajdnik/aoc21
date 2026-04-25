@@ -1,3 +1,5 @@
+// Package day12 solves AoC 2021 day 12: Passage Pathing.
+// Count paths through a cave system with constraints on revisiting small caves.
 package day12
 
 import (
@@ -53,6 +55,7 @@ func hasLowerDuplicate(path []string) bool {
 	return false
 }
 
+// Part1 counts paths where small caves can only be visited once.
 func Part1(lines []string) int {
 	graph := toGraph(lines)
 	paths := traverseGraph(graph, []string{"start"}, func(path []string, node string) bool {
@@ -61,6 +64,7 @@ func Part1(lines []string) int {
 	return len(paths)
 }
 
+// Part2 allows one small cave to be visited twice.
 func Part2(lines []string) int {
 	graph := toGraph(lines)
 	paths := traverseGraph(graph, []string{"start"}, func(path []string, node string) bool {

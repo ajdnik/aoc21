@@ -1,9 +1,14 @@
+// Package day06 solves AoC 2021 day 6: Lanternfish.
+// Simulate lanternfish population growth using bucket counting for efficiency.
 package day06
 
 import (
 	"github.com/ajdnik/aoc21/utils"
 )
 
+// simulate counts fish after the given number of days.
+// Each bucket[i] holds the count of fish with timer value i (0-8).
+// Fish at 0 spawn a new fish at 8 and reset to 6.
 func simulate(timers []int, days int) int {
 	var buckets [9]int
 	for _, t := range timers {

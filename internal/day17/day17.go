@@ -1,3 +1,5 @@
+// Package day17 solves AoC 2021 day 17: Trick Shot.
+// Find probe trajectories that land in a target area.
 package day17
 
 import (

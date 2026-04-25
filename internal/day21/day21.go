@@ -1,3 +1,5 @@
+// Package day21 solves AoC 2021 day 21: Dirac Dice.
+// Simulate deterministic and quantum dice games on a circular board.
 package day21
 
 import (

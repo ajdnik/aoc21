@@ -1,3 +1,5 @@
+// Package day20 solves AoC 2021 day 20: Trench Map.
+// Apply an image enhancement algorithm, handling the infinite background flip.
 package day20
 
 type image struct {
@@ -26,6 +28,7 @@ func parseInput(lines []string) (string, *image) {
 	return algo, img
 }
 
+// enhance applies one step: for each pixel, read 3x3 neighborhood as 9-bit index into algo.
 func enhance(algo string, img *image) *image {
 	next := &image{
 		pixels: map[[2]int]bool{},

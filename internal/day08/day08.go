@@ -1,3 +1,5 @@
+// Package day08 solves AoC 2021 day 8: Seven Segment Displays.
+// Decode scrambled seven-segment display wiring by deducing segment mappings.
 package day08
 
 import (
@@ -31,6 +33,7 @@ func parseObservations(lines []string) []*observation {
 	return obs
 }
 
+// Part1 counts output digits with unique segment counts (1, 4, 7, 8).
 func Part1(lines []string) int {
 	observations := parseObservations(lines)
 	var sum int
@@ -146,6 +149,7 @@ func toNumbers(output []string, mapping map[string]string) []int {
 	return numbers
 }
 
+// Part2 decodes all output values and sums the 4-digit numbers.
 func Part2(lines []string) int {
 	observations := parseObservations(lines)
 	var sum int

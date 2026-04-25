@@ -1,3 +1,5 @@
+// Package day07 solves AoC 2021 day 7: The Treachery of Whales.
+// Find the optimal alignment position for crab submarines to minimize fuel.
 package day07
 
 import (
@@ -28,6 +30,7 @@ func findMinFuel(positions []int, getFuel func(cur, goal int) int) int {
 	return minFuel
 }
 
+// Part1 uses constant fuel cost per step.
 func Part1(lines []string) int {
 	positions, err := utils.ToIntList(lines[0], ",")
 	if err != nil {
@@ -38,6 +41,7 @@ func Part1(lines []string) int {
 	})
 }
 
+// Part2 uses triangular fuel cost (1+2+3+...+n per n steps).
 func Part2(lines []string) int {
 	positions, err := utils.ToIntList(lines[0], ",")
 	if err != nil {

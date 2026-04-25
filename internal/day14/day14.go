@@ -1,3 +1,5 @@
+// Package day14 solves AoC 2021 day 14: Extended Polymerization.
+// Apply pair insertion rules to a polymer, tracking pair counts for efficiency.
 package day14
 
 import (

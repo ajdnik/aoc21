@@ -1,3 +1,5 @@
+// Package day18 solves AoC 2021 day 18: Snailfish.
+// Add and reduce nested pairs using string manipulation for explode/split rules.
 package day18
 
 import (
@@ -8,6 +10,7 @@ func addNum(a, b string) string {
 	return reduce("[" + a + "," + b + "]")
 }
 
+// reduce repeatedly applies explode (priority) then split until stable.
 func reduce(s string) string {
 	for {
 		if next, changed := explode(s); changed {
@@ -118,6 +121,7 @@ func isDigit(b byte) bool {
 	return b >= '0' && b <= '9'
 }
 
+// magnitude computes 3*left + 2*right recursively.
 func magnitude(s string) int {
 	val, _ := parseMagnitude(s, 0)
 	return val

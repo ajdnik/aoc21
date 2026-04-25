@@ -1,3 +1,5 @@
+// Package day03 solves AoC 2021 day 3: Binary Diagnostic.
+// Analyze binary diagnostic reports to compute power and life support ratings.
 package day03
 
 import (
@@ -63,6 +65,7 @@ func buildValue(data []string, typ searchType, pos int) string {
 	return buildValue(filtered, typ, pos+1)
 }
 
+// Part1 computes power consumption: gamma rate * epsilon rate.
 func Part1(lines []string) int {
 	var ones, zeros []int
 	for _, data := range lines {
@@ -94,6 +97,7 @@ func Part1(lines []string) int {
 	return binaryToInt(gamma.String()) * binaryToInt(epsilon.String())
 }
 
+// Part2 computes life support rating: oxygen generator * CO2 scrubber values.
 func Part2(lines []string) int {
 	oxygenVal := buildValue(lines, oxygen, 0)
 	co2Val := buildValue(lines, co2, 0)

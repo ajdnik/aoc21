@@ -1,3 +1,5 @@
+// Package day01 solves AoC 2021 day 1: Sonar Sweep.
+// Count depth measurement increases, both individually and in sliding windows of 3.
 package day01
 
 import "strconv"
@@ -14,6 +16,7 @@ func parseNumbers(lines []string) []int {
 	return nums
 }
 
+// Part1 counts how many measurements are larger than the previous one.
 func Part1(lines []string) int {
 	nums := parseNumbers(lines)
 	var inc int
@@ -25,6 +28,7 @@ func Part1(lines []string) int {
 	return inc
 }
 
+// Part2 counts increases using a sliding window of 3 measurements.
 func Part2(lines []string) int {
 	nums := parseNumbers(lines)
 	var inc int

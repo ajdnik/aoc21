@@ -1,3 +1,5 @@
+// Package day13 solves AoC 2021 day 13: Transparent Origami.
+// Fold a dot grid along axes and read the resulting letter pattern.
 package day13
 
 import (

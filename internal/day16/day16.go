@@ -1,3 +1,5 @@
+// Package day16 solves AoC 2021 day 16: Packet Decoder.
+// Parse nested BITS packets from hex and evaluate their expression tree.
 package day16
 
 import (
@@ -82,6 +84,8 @@ func sumVersions(p packet) int {
 	return total
 }
 
+// evaluate recursively computes the packet value.
+// Type IDs: 0=sum, 1=product, 2=min, 3=max, 4=literal, 5=gt, 6=lt, 7=eq.
 func evaluate(p packet) int {
 	switch p.typeID {
 	case 4:

@@ -1,3 +1,5 @@
+// Package day09 solves AoC 2021 day 9: Smoke Basin.
+// Find low points in a heightmap and compute basin sizes.
 package day09
 
 import (

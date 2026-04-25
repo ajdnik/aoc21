@@ -1,3 +1,6 @@
+// Package day25 solves AoC 2021 day 25: Sea Cucumber.
+// Simulate east-facing then south-facing herds moving on a wrapping grid
+// until no cucumber can move.
 package day25
 
 func Part1(lines []string) int {

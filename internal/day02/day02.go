@@ -1,3 +1,5 @@
+// Package day02 solves AoC 2021 day 2: Dive!
+// Navigate a submarine using forward/up/down commands.
 package day02
 
 import (
@@ -59,6 +61,7 @@ func parseMovements(lines []string) []movement {
 	return movs
 }
 
+// Part1 tracks horizontal position and depth directly.
 func Part1(lines []string) int {
 	movs := parseMovements(lines)
 	var horiz, depth int
@@ -75,6 +78,7 @@ func Part1(lines []string) int {
 	return horiz * depth
 }
 
+// Part2 introduces aim: up/down adjust aim, forward moves and dives by aim.
 func Part2(lines []string) int {
 	movs := parseMovements(lines)
 	var horiz, depth, aim int

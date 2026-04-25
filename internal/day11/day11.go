@@ -1,3 +1,5 @@
+// Package day11 solves AoC 2021 day 11: Dumbo Octopus.
+// Simulate octopus energy flashes on a 10x10 grid with chain reactions.
 package day11
 
 import (

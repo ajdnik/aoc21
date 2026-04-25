@@ -1,3 +1,6 @@
+// Package day24 solves AoC 2021 day 24: Arithmetic Logic Unit.
+// Analyze the MONAD program's 14 blocks to find valid model numbers
+// by pairing push/pop operations on a base-26 stack (the z register).
 package day24
 
 import (

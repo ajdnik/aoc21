@@ -1,3 +1,5 @@
+// Package day15 solves AoC 2021 day 15: Chiton.
+// Find the lowest-risk path through a cave grid using Dijkstra's algorithm.
 package day15
 
 import (

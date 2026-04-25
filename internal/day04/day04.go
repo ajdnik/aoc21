@@ -1,3 +1,5 @@
+// Package day04 solves AoC 2021 day 4: Giant Squid.
+// Simulate bingo games to find the first and last winning boards.
 package day04
 
 import (
@@ -90,6 +92,7 @@ func parseInput(lines []string) ([]int, []*bingoBoard) {
 	return drawNumbers, boards
 }
 
+// Part1 returns the score of the first board to win.
 func Part1(lines []string) int {
 	drawNumbers, boards := parseInput(lines)
 
@@ -104,6 +107,7 @@ func Part1(lines []string) int {
 	return -1
 }
 
+// Part2 returns the score of the last board to win.
 func Part2(lines []string) int {
 	drawNumbers, boards := parseInput(lines)
 

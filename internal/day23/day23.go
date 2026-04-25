@@ -1,3 +1,5 @@
+// Package day23 solves AoC 2021 day 23: Amphipod.
+// Find the minimum energy to organize amphipods using Dijkstra over game states.
 package day23
 
 import (

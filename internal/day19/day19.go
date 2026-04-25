@@ -1,3 +1,5 @@
+// Package day19 solves AoC 2021 day 19: Beacon Scanner.
+// Match 3D scanners by finding 12+ overlapping beacons across 24 rotations.
 package day19
 
 import (

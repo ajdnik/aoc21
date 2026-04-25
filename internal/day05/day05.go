@@ -1,3 +1,5 @@
+// Package day05 solves AoC 2021 day 5: Hydrothermal Venture.
+// Count points where hydrothermal vent lines overlap on a 2D grid.
 package day05
 
 import "fmt"
@@ -115,6 +117,7 @@ func countOverlapping(field []int) int {
 	return count
 }
 
+// Part1 counts overlapping points for horizontal and vertical lines only.
 func Part1(data []string) int {
 	lines, dim := parseLines(data)
 
@@ -131,6 +134,7 @@ func Part1(data []string) int {
 	return countOverlapping(field)
 }
 
+// Part2 counts overlapping points for all lines including diagonals.
 func Part2(data []string) int {
 	lines, dim := parseLines(data)
 

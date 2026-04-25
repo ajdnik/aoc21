@@ -1,3 +1,5 @@
+// Package day10 solves AoC 2021 day 10: Syntax Scoring.
+// Detect corrupted and incomplete bracket sequences.
 package day10
 
 import "slices"
@@ -39,6 +41,7 @@ var syntaxScores = map[rune]int{
 	'>': 25137,
 }
 
+// Part1 scores corrupted lines by their first illegal closing character.
 func Part1(lines []string) int {
 	var score int
 	for _, line := range lines {
@@ -57,6 +60,7 @@ var completionScores = map[rune]int{
 	'<': 4,
 }
 
+// Part2 scores incomplete lines by the characters needed to complete them.
 func Part2(lines []string) int {
 	var scores []int
 	for _, line := range lines {

@@ -1,3 +1,5 @@
+// Package day22 solves AoC 2021 day 22: Reactor Reboot.
+// Toggle cuboid regions on/off using inclusion-exclusion with signed cuboids.
 package day22
 
 import (
