@@ -22,3 +22,17 @@ func ScanFile() (*bufio.Scanner, func(), error) {
 		}
 	}, nil
 }
+
+func ReadLines() ([]string, error) {
+	scanner, closer, err := ScanFile()
+	if err != nil {
+		return nil, err
+	}
+	defer closer()
+
+	var lines []string
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, nil
+}
