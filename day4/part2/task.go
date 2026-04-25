@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"slices"
 
 	"github.com/ajdnik/aoc21/day4"
 	"github.com/ajdnik/aoc21/utils"
@@ -52,7 +53,7 @@ func main() {
 	wonDraw := []int64{}
 	for _, draw := range drawNumbers {
 		for idx, board := range boards {
-			if utils.IsIncluded(won, idx) {
+			if slices.Contains(won, idx) {
 				continue
 			}
 			board.MarkNumber(draw)

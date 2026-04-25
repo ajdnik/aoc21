@@ -2,12 +2,12 @@ package day7
 
 import (
 	"math"
-
-	"github.com/ajdnik/aoc21/utils"
+	"slices"
 )
 
 func FindMinFuel(positions []int64, getFuel func(cur, goal int64) int64) int64 {
-	min, max := utils.MinMax(positions)
+	min := slices.Min(positions)
+	max := slices.Max(positions)
 
 	minFuel := int64(math.MaxInt64)
 	for goal := min; goal < max; goal++ {

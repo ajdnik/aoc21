@@ -1,33 +1,39 @@
 package utils
 
-func Sum(data []int64) int64 {
-	var sum int64
+type Number interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 |
+		~float32 | ~float64
+}
+
+func Sum[T Number](data []T) T {
+	var sum T
 	for _, num := range data {
 		sum += num
 	}
 	return sum
 }
 
-func SumUpTo(n int64) int64 {
-	var sum int64
-	for i := int64(1); i <= n; i++ {
+func SumUpTo[T Number](n T) T {
+	var sum, i T
+	for i = 1; i <= n; i++ {
 		sum += i
 	}
 	return sum
 }
 
-func Mul(data []int64) int64 {
-	mul := int64(1)
+func Mul[T Number](data []T) T {
+	mul := T(1)
 	for _, num := range data {
 		mul *= num
 	}
 	return mul
 }
 
-func Add(data []int64, num int64) []int64 {
-	res := []int64{}
-	for _, n := range data {
-		res = append(res, n+num)
+func Add[T Number](data []T, num T) []T {
+	res := make([]T, len(data))
+	for i, n := range data {
+		res[i] = n + num
 	}
 	return res
 }

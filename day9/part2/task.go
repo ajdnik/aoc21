@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"sort"
+	"slices"
 
 	"github.com/ajdnik/aoc21/day9"
 	"github.com/ajdnik/aoc21/utils"
@@ -15,7 +15,7 @@ func MergeBasins(basins [][]int64, indexes []int64) ([][]int64, int64) {
 	remain := indexes[1:]
 	for row := 0; row < len(basins); row++ {
 		for col := 0; col < len(basins[row]); col++ {
-			if utils.IsIncluded64(remain, basins[row][col]) {
+			if slices.Contains(remain, basins[row][col]) {
 				basins[row][col] = primary
 			}
 		}
@@ -88,7 +88,7 @@ func main() {
 	}
 
 	basinSizes := FindBasinSizes(heights)
-	sort.Slice(basinSizes, func(i, j int) bool { return basinSizes[i] > basinSizes[j] })
+	slices.SortFunc(basinSizes, func(a, b int64) int { return int(b - a) })
 	mul := utils.Mul(basinSizes[0:3])
 	log.Printf("sizeMul=%d\n", mul)
 }
