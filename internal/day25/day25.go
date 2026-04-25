@@ -13,13 +13,13 @@ func Part1(lines []string) int {
 
 		// East-facing move
 		next := make([][]byte, rows)
-		for r := range grid {
+		for r, row := range grid {
 			next[r] = make([]byte, cols)
-			copy(next[r], grid[r])
+			copy(next[r], row)
 		}
-		for r := 0; r < rows; r++ {
-			for c := 0; c < cols; c++ {
-				if grid[r][c] == '>' {
+		for r, row := range grid {
+			for c, ch := range row {
+				if ch == '>' {
 					nc := (c + 1) % cols
 					if grid[r][nc] == '.' {
 						next[r][nc] = '>'
@@ -33,13 +33,13 @@ func Part1(lines []string) int {
 
 		// South-facing move
 		next2 := make([][]byte, rows)
-		for r := range grid {
+		for r, row := range grid {
 			next2[r] = make([]byte, cols)
-			copy(next2[r], grid[r])
+			copy(next2[r], row)
 		}
-		for r := 0; r < rows; r++ {
-			for c := 0; c < cols; c++ {
-				if grid[r][c] == 'v' {
+		for r, row := range grid {
+			for c, ch := range row {
+				if ch == 'v' {
 					nr := (r + 1) % rows
 					if grid[nr][c] == '.' {
 						next2[nr][c] = 'v'

@@ -70,7 +70,7 @@ func enhance(algo string, img *image) *image {
 
 func solve(lines []string, steps int) int {
 	algo, img := parseInput(lines)
-	for i := 0; i < steps; i++ {
+	for range steps {
 		img = enhance(algo, img)
 	}
 	return len(img.pixels)

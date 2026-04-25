@@ -1,6 +1,9 @@
 package day03
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 type searchType int
 
@@ -77,18 +80,18 @@ func Part1(lines []string) int {
 		}
 	}
 
-	var gamma, epsilon string
-	for i := 0; i < len(zeros); i++ {
-		if zeros[i] > ones[i] {
-			gamma += "0"
-			epsilon += "1"
+	var gamma, epsilon strings.Builder
+	for i, z := range zeros {
+		if z > ones[i] {
+			gamma.WriteByte('0')
+			epsilon.WriteByte('1')
 		} else {
-			gamma += "1"
-			epsilon += "0"
+			gamma.WriteByte('1')
+			epsilon.WriteByte('0')
 		}
 	}
 
-	return binaryToInt(gamma) * binaryToInt(epsilon)
+	return binaryToInt(gamma.String()) * binaryToInt(epsilon.String())
 }
 
 func Part2(lines []string) int {

@@ -26,8 +26,8 @@ func findNeighbors(data [][]int, row, col int, predicate func(itm int) bool) []i
 func Part1(lines []string) int {
 	heights := utils.ParseDigitGrid(lines)
 	var sum int
-	for row := 0; row < len(heights); row++ {
-		for col := 0; col < len(heights[row]); col++ {
+	for row := range heights {
+		for col := range heights[row] {
 			res := findNeighbors(heights, row, col, func(itm int) bool {
 				return itm <= heights[row][col]
 			})
@@ -44,8 +44,8 @@ const noBasin = -1
 func mergeBasins(basins [][]int, indexes []int) ([][]int, int) {
 	primary := indexes[0]
 	remain := indexes[1:]
-	for row := 0; row < len(basins); row++ {
-		for col := 0; col < len(basins[row]); col++ {
+	for row := range basins {
+		for col := range basins[row] {
 			if slices.Contains(remain, basins[row][col]) {
 				basins[row][col] = primary
 			}
@@ -58,16 +58,16 @@ func Part2(lines []string) int {
 	heights := utils.ParseDigitGrid(lines)
 
 	basins := make([][]int, len(heights))
-	for row := 0; row < len(heights); row++ {
+	for row := range heights {
 		basins[row] = make([]int, len(heights[row]))
-		for col := 0; col < len(heights[row]); col++ {
+		for col := range heights[row] {
 			basins[row][col] = noBasin
 		}
 	}
 
 	var count int
-	for row := 0; row < len(heights); row++ {
-		for col := 0; col < len(heights[row]); col++ {
+	for row := range heights {
+		for col := range heights[row] {
 			if heights[row][col] == 9 {
 				continue
 			}
@@ -88,8 +88,8 @@ func Part2(lines []string) int {
 	}
 
 	sizes := map[int]int{}
-	for row := 0; row < len(heights); row++ {
-		for col := 0; col < len(heights[row]); col++ {
+	for row := range heights {
+		for col := range heights[row] {
 			if basins[row][col] == noBasin {
 				continue
 			}

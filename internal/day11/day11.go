@@ -32,22 +32,22 @@ func checkFlash(energies [][]int, flashes [][]bool, row, col int, inc int) {
 
 func simulateStep(energies [][]int) int {
 	flashes := make([][]bool, len(energies))
-	for row := 0; row < len(energies); row++ {
+	for row := range energies {
 		for i := range energies[row] {
 			energies[row][i]++
 		}
 		flashes[row] = make([]bool, len(energies[row]))
 	}
 
-	for row := 0; row < len(energies); row++ {
-		for col := 0; col < len(energies[row]); col++ {
+	for row := range energies {
+		for col := range energies[row] {
 			checkFlash(energies, flashes, row, col, 0)
 		}
 	}
 
 	var total int
-	for row := 0; row < len(energies); row++ {
-		for col := 0; col < len(energies[row]); col++ {
+	for row := range flashes {
+		for col := range flashes[row] {
 			if flashes[row][col] {
 				total++
 				energies[row][col] = 0
@@ -60,7 +60,7 @@ func simulateStep(energies [][]int) int {
 func Part1(lines []string) int {
 	energies := parseEnergies(lines)
 	var total int
-	for step := 0; step < 100; step++ {
+	for range 100 {
 		total += simulateStep(energies)
 	}
 	return total

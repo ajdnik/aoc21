@@ -32,8 +32,8 @@ func (s state) key() string {
 }
 
 func (s state) done() bool {
-	for r := 0; r < 4; r++ {
-		for _, v := range s.rooms[r] {
+	for r, room := range s.rooms {
+		for _, v := range room {
 			if int(v) != r {
 				return false
 			}
@@ -44,9 +44,9 @@ func (s state) done() bool {
 
 func (s state) clone() state {
 	ns := state{hallway: s.hallway}
-	for i := 0; i < 4; i++ {
-		ns.rooms[i] = make([]int8, len(s.rooms[i]))
-		copy(ns.rooms[i], s.rooms[i])
+	for i, room := range s.rooms {
+		ns.rooms[i] = make([]int8, len(room))
+		copy(ns.rooms[i], room)
 	}
 	return ns
 }
@@ -110,11 +110,11 @@ type item struct {
 
 type pq []item
 
-func (q pq) Len() int            { return len(q) }
-func (q pq) Less(i, j int) bool  { return q[i].cost < q[j].cost }
-func (q pq) Swap(i, j int)       { q[i], q[j] = q[j], q[i] }
-func (q *pq) Push(x interface{}) { *q = append(*q, x.(item)) }
-func (q *pq) Pop() interface{} {
+func (q pq) Len() int           { return len(q) }
+func (q pq) Less(i, j int) bool { return q[i].cost < q[j].cost }
+func (q pq) Swap(i, j int)      { q[i], q[j] = q[j], q[i] }
+func (q *pq) Push(x any)        { *q = append(*q, x.(item)) }
+func (q *pq) Pop() any {
 	old := *q
 	n := len(old)
 	v := old[n-1]

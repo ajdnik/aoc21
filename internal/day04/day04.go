@@ -12,11 +12,11 @@ type bingoBoard struct {
 	Selected [5][5]bool
 }
 
-func (bb *bingoBoard) markNumber(num int) bool {
-	for row := 0; row < 5; row++ {
-		for col := 0; col < 5; col++ {
-			if bb.Numbers[row][col] == num && !bb.Selected[row][col] {
-				bb.Selected[row][col] = true
+func (b *bingoBoard) markNumber(num int) bool {
+	for row := range b.Numbers {
+		for col := range b.Numbers[row] {
+			if b.Numbers[row][col] == num && !b.Selected[row][col] {
+				b.Selected[row][col] = true
 				return true
 			}
 		}
@@ -24,24 +24,24 @@ func (bb *bingoBoard) markNumber(num int) bool {
 	return false
 }
 
-func (bb *bingoBoard) sumUnselected() int {
+func (b *bingoBoard) sumUnselected() int {
 	var sum int
-	for row := 0; row < 5; row++ {
-		for col := 0; col < 5; col++ {
-			if !bb.Selected[row][col] {
-				sum += bb.Numbers[row][col]
+	for row := range b.Numbers {
+		for col := range b.Numbers[row] {
+			if !b.Selected[row][col] {
+				sum += b.Numbers[row][col]
 			}
 		}
 	}
 	return sum
 }
 
-func (bb *bingoBoard) hasBingo() bool {
-	for i := 0; i < 5; i++ {
+func (b *bingoBoard) hasBingo() bool {
+	for i := range b.Selected {
 		hasCol, hasRow := true, true
-		for j := 0; j < 5; j++ {
-			hasCol = hasCol && bb.Selected[i][j]
-			hasRow = hasRow && bb.Selected[j][i]
+		for j := range b.Selected[i] {
+			hasCol = hasCol && b.Selected[i][j]
+			hasRow = hasRow && b.Selected[j][i]
 		}
 		if hasCol || hasRow {
 			return true

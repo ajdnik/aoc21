@@ -23,7 +23,7 @@ func solve(lines []string, steps int) int {
 		pairs[template[i:i+2]]++
 	}
 
-	for step := 0; step < steps; step++ {
+	for range steps {
 		next := map[string]int{}
 		for pair, count := range pairs {
 			if insert, ok := rules[pair]; ok {

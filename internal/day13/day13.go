@@ -54,7 +54,7 @@ func parsePaperAndFolds(lines []string) ([][]bool, []*fold) {
 	}
 
 	paper := make([][]bool, maxX+1)
-	for row := 0; row < len(paper); row++ {
+	for row := range paper {
 		paper[row] = make([]bool, maxY+1)
 	}
 	for _, dot := range dots {
@@ -66,7 +66,7 @@ func parsePaperAndFolds(lines []string) ([][]bool, []*fold) {
 func foldPaper(paper [][]bool, f *fold) [][]bool {
 	if f.axis == yAxis {
 		folded := make([][]bool, len(paper))
-		for row := 0; row < len(folded); row++ {
+		for row := range folded {
 			folded[row] = make([]bool, f.dimension)
 			for col := 0; col < f.dimension; col++ {
 				mirror := 2*f.dimension - col
@@ -94,9 +94,9 @@ func foldPaper(paper [][]bool, f *fold) [][]bool {
 
 func countDots(paper [][]bool) int {
 	var count int
-	for row := 0; row < len(paper); row++ {
-		for col := 0; col < len(paper[row]); col++ {
-			if paper[row][col] {
+	for _, row := range paper {
+		for _, cell := range row {
+			if cell {
 				count++
 			}
 		}

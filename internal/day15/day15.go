@@ -17,11 +17,11 @@ type item struct {
 
 type priorityQueue []item
 
-func (pq priorityQueue) Len() int            { return len(pq) }
-func (pq priorityQueue) Less(i, j int) bool  { return pq[i].risk < pq[j].risk }
-func (pq priorityQueue) Swap(i, j int)       { pq[i], pq[j] = pq[j], pq[i] }
-func (pq *priorityQueue) Push(x interface{}) { *pq = append(*pq, x.(item)) }
-func (pq *priorityQueue) Pop() interface{} {
+func (pq priorityQueue) Len() int           { return len(pq) }
+func (pq priorityQueue) Less(i, j int) bool { return pq[i].risk < pq[j].risk }
+func (pq priorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
+func (pq *priorityQueue) Push(x any)        { *pq = append(*pq, x.(item)) }
+func (pq *priorityQueue) Pop() any {
 	old := *pq
 	n := len(old)
 	v := old[n-1]
