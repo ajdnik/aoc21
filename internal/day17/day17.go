@@ -10,7 +10,10 @@ type target struct {
 
 func parseTarget(line string) target {
 	var t target
-	fmt.Sscanf(line, "target area: x=%d..%d, y=%d..%d", &t.x1, &t.x2, &t.y1, &t.y2)
+	_, err := fmt.Sscanf(line, "target area: x=%d..%d, y=%d..%d", &t.x1, &t.x2, &t.y1, &t.y2)
+	if err != nil {
+		panic(err)
+	}
 	return t
 }
 
