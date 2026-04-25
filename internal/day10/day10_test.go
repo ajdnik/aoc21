@@ -1,23 +1,25 @@
 package day10
 
 import (
-	"os"
 	"strings"
 	"testing"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
-func readTestInput(t *testing.T) []string {
-	t.Helper()
-	data, err := os.ReadFile("../../input/day10_test.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	return strings.Split(strings.TrimSpace(string(data)), "\n")
-}
+var testInput = utils.ReadLines(strings.NewReader(`[({(<(())[]>[[{[]{<()<>>
+[(()[<>])]({[<{<<[]>>(
+{([(<{}[<>[]}>{[]{[(<()>
+(((({<>}<{<{<>}{[]{[]{}
+[[<[([]))<([[{}[[()]]]
+[{[{({}]{}}([{[{{{}}([]
+{<[[]]>}<{[{[{[]{()[[[]
+[<(<(<(<{}))><([]([]()
+<{([([[(<>()){}]>(<<{{
+<{([{{}}[<[[[<>{}]]]>[]]`))
 
 func TestPart1(t *testing.T) {
-	lines := readTestInput(t)
-	got := Part1(lines)
+	got := Part1(testInput)
 	want := int64(26397)
 	if got != want {
 		t.Errorf("Part1() = %d, want %d", got, want)
@@ -25,8 +27,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	lines := readTestInput(t)
-	got := Part2(lines)
+	got := Part2(testInput)
 	want := int64(288957)
 	if got != want {
 		t.Errorf("Part2() = %d, want %d", got, want)

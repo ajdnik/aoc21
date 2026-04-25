@@ -2,37 +2,14 @@ package utils
 
 import (
 	"bufio"
-	"errors"
-	"log"
-	"os"
+	"io"
 )
 
-func ScanFile() (*bufio.Scanner, func(), error) {
-	if len(os.Args) != 2 {
-		return nil, nil, errors.New("missing filename input args parameter")
-	}
-	file, err := os.Open(os.Args[1])
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return bufio.NewScanner(file), func() {
-		if err = file.Close(); err != nil {
-			log.Fatal(err)
-		}
-	}, nil
-}
-
-func ReadLines() ([]string, error) {
-	scanner, closer, err := ScanFile()
-	if err != nil {
-		return nil, err
-	}
-	defer closer()
-
+func ReadLines(r io.Reader) []string {
+	scanner := bufio.NewScanner(r)
 	var lines []string
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	return lines, nil
+	return lines
 }

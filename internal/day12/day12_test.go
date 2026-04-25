@@ -1,33 +1,65 @@
 package day12
 
 import (
-	"os"
 	"strings"
 	"testing"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
-func readTestInput(t *testing.T, name string) []string {
-	t.Helper()
-	data, err := os.ReadFile("../../input/" + name)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return strings.Split(strings.TrimSpace(string(data)), "\n")
-}
+var (
+	testInput1 = utils.ReadLines(strings.NewReader(`start-A
+start-b
+A-c
+A-b
+b-d
+A-end
+b-end`))
+
+	testInput2 = utils.ReadLines(strings.NewReader(`dc-end
+HN-start
+start-kj
+dc-start
+dc-HN
+LN-dc
+HN-end
+kj-sa
+kj-HN
+kj-dc`))
+
+	testInput3 = utils.ReadLines(strings.NewReader(`fs-end
+he-DX
+fs-he
+start-DX
+pj-DX
+end-zg
+zg-sl
+zg-pj
+pj-he
+RW-he
+fs-DX
+pj-RW
+zg-RW
+start-pj
+he-WI
+zg-he
+pj-fs
+start-RW`))
+)
 
 func TestPart1(t *testing.T) {
 	tests := []struct {
-		file string
-		want int64
+		name  string
+		input []string
+		want  int64
 	}{
-		{"day12_test.txt", 10},
-		{"day12_test2.txt", 19},
-		{"day12_test3.txt", 226},
+		{"small", testInput1, 10},
+		{"medium", testInput2, 19},
+		{"large", testInput3, 226},
 	}
 	for _, tt := range tests {
-		t.Run(tt.file, func(t *testing.T) {
-			lines := readTestInput(t, tt.file)
-			got := Part1(lines)
+		t.Run(tt.name, func(t *testing.T) {
+			got := Part1(tt.input)
 			if got != tt.want {
 				t.Errorf("Part1() = %d, want %d", got, tt.want)
 			}
@@ -37,17 +69,17 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	tests := []struct {
-		file string
-		want int64
+		name  string
+		input []string
+		want  int64
 	}{
-		{"day12_test.txt", 36},
-		{"day12_test2.txt", 103},
-		{"day12_test3.txt", 3509},
+		{"small", testInput1, 36},
+		{"medium", testInput2, 103},
+		{"large", testInput3, 3509},
 	}
 	for _, tt := range tests {
-		t.Run(tt.file, func(t *testing.T) {
-			lines := readTestInput(t, tt.file)
-			got := Part2(lines)
+		t.Run(tt.name, func(t *testing.T) {
+			got := Part2(tt.input)
 			if got != tt.want {
 				t.Errorf("Part2() = %d, want %d", got, tt.want)
 			}

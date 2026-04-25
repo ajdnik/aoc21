@@ -1,23 +1,27 @@
 package day03
 
 import (
-	"os"
 	"strings"
 	"testing"
+
+	"github.com/ajdnik/aoc21/utils"
 )
 
-func readTestInput(t *testing.T) []string {
-	t.Helper()
-	data, err := os.ReadFile("../../input/day03_test.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	return strings.Split(strings.TrimSpace(string(data)), "\n")
-}
+var testInput = utils.ReadLines(strings.NewReader(`00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010`))
 
 func TestPart1(t *testing.T) {
-	lines := readTestInput(t)
-	got := Part1(lines)
+	got := Part1(testInput)
 	want := int64(198)
 	if got != want {
 		t.Errorf("Part1() = %d, want %d", got, want)
@@ -25,8 +29,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	lines := readTestInput(t)
-	got := Part2(lines)
+	got := Part2(testInput)
 	want := int64(230)
 	if got != want {
 		t.Errorf("Part2() = %d, want %d", got, want)
